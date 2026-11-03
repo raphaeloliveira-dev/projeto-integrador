@@ -1,0 +1,59 @@
+@import url("../style.css");
+
+/* ---- Cabeçalho: flex com logo à esquerda e navegação à direita ---- */
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  padding: var(--esp-2) var(--esp-3);
+  background: var(--cor-primaria);
+  color: #fff;
+}
+.topo__marca { font-size: 1.25rem; font-weight: 700; }
+.topo__nav { display: flex; gap: var(--esp-3); list-style: none; }
+.topo__nav a { text-decoration: none; }
+
+/* ---- Conteúdo ---- */
+.principal {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--esp-4) var(--esp-3);
+}
+.principal__titulo { font-size: 1.75rem; margin-bottom: var(--esp-1); }
+.principal__sub { color: var(--cor-texto-leve); margin-bottom: var(--esp-4); max-width: 60ch; }
+
+/* ---- Vitrine: cards em flex-wrap ---- */
+.vitrine { display: flex; flex-wrap: wrap; gap: var(--esp-3); }
+
+.card {
+  flex: 1 1 240px;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  padding: var(--esp-3);
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+}
+.card__nome { font-size: 1.1rem; }
+.card__desc { color: var(--cor-texto-leve); flex: 1; }
+.card__rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--esp-1);
+}
+.card__preco { font-weight: 700; color: var(--cor-primaria); }
+
+/* ---- Rodapé ---- */
+.rodape {
+  padding: var(--esp-2) var(--esp-3);
+  text-align: center;
+  color: var(--cor-texto-leve);
+  border-top: 1px solid var(--cor-borda);
+}

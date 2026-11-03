@@ -1,0 +1,56 @@
+/* Estilos globais. Toda página e formulário importa este arquivo. */
+:root {
+  /* Paleta (Gestalt: similaridade + contraste figura/fundo)
+     Verdes = estrutura e ações principais. Amarelo = único ponto de destaque. */
+  --cor-fundo:      #F3F7F4;
+  --cor-superficie: #FFFFFF;
+  --cor-primaria:   #1F4D3A;
+  --cor-secundaria: #4C9A6A;
+  --cor-destaque:   #F2B134;
+  --cor-texto:      #16231C;
+  --cor-texto-leve: #4F6358;
+  --cor-borda:      #D5E3DA;
+
+  /* Espaçamento em escala fixa (Gestalt: proximidade) */
+  --esp-1: 0.5rem;
+  --esp-2: 1rem;
+  --esp-3: 1.5rem;
+  --esp-4: 2.5rem;
+
+  --raio: 10px;
+  --fonte: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--fonte);
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 3px solid var(--cor-destaque);
+  outline-offset: 2px;
+}
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--esp-1) var(--esp-2);
+  border: 0;
+  border-radius: var(--raio);
+  background: var(--cor-primaria);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.botao--destaque { background: var(--cor-destaque); color: var(--cor-texto); }
