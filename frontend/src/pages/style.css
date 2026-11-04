@@ -1,0 +1,216 @@
+
+/* Variáveis globais */
+:root {
+    --verde-principal: #174C3C;
+    --verde-secundario: #70A88A;
+    --bege: #F2F0E8;
+    --amarelo: #D9A441;
+    --branco: #FFFFFF;
+    --texto: #26332C;
+}
+
+/* Configurações gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bege);
+    color: var(--texto);
+}
+
+/* Cabeçalho */
+header {
+    background-color: var(--verde-principal);
+    color: var(--branco);
+    padding: 20px 40px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Menu */
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: var(--branco);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: var(--amarelo);
+    transform: translateY(-3px);
+}
+
+/* Conteúdo principal */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+
+/* Botões */
+button {
+    background-color: var(--verde-principal);
+    color: var(--branco);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: var(--verde-secundario);
+    transform: translateY(-3px);
+}
+
+/* Animação */
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Apresentação principal */
+.apresentacao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+    max-width: 1100px;
+    animation: aparecer 1s ease;
+}
+
+.texto-apresentacao {
+    flex: 1;
+}
+
+.texto-apresentacao h2 {
+    color: var(--verde-principal);
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.texto-apresentacao p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.imagem-apresentacao {
+    flex: 1;
+    height: 300px;
+    background-color: var(--verde-secundario);
+    border-radius: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.simbolo {
+    font-size: 120px;
+    color: white;
+}
+
+/* Sobre */
+.sobre {
+    padding: 60px 40px;
+    text-align: center;
+}
+
+.sobre h2,
+.produtos h2 {
+    color: var(--verde-principal);
+    margin-bottom: 20px;
+}
+
+.sobre p {
+    max-width: 650px;
+    margin: auto;
+    line-height: 1.6;
+}
+
+/* Produtos */
+.produtos {
+    padding: 50px 40px;
+    text-align: center;
+}
+
+.lista-produtos {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.produto {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    flex: 1;
+    min-width: 200px;
+    max-width: 300px;
+    transition: 0.3s;
+}
+
+.produto:hover {
+    transform: translateY(-8px);
+}
+
+.produto h3 {
+    color: var(--verde-principal);
+    margin-bottom: 15px;
+}
+
+.produto p {
+    margin-bottom: 15px;
+}
+
+.produto span {
+    color: var(--verde-principal);
+    font-weight: bold;
+}
+
+/* Rodapé */
+footer {
+    background-color: var(--verde-principal);
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+/* Responsividade */
+@media (max-width: 700px) {
+    .apresentacao {
+        flex-direction: column;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

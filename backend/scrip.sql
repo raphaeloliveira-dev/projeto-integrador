@@ -1,0 +1,67 @@
+
+CREATE DATABASE IF NOT EXISTS projeto_integrador;
+USE projeto_integrador;
+
+CREATE TABLE IF NOT EXISTS cliente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS cadastro (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    endereco VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS consulta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    data_consulta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    descricao TEXT,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+);
+
+CREATE TABLE IF NOT EXISTS login (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    data_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+);
+
+CREATE TABLE IF NOT EXISTS compra (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    data_compra TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+);
+
+CREATE TABLE IF NOT EXISTS venda (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    data_venda TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+);
+
+CREATE TABLE IF NOT EXISTS nota_fiscal (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    data_nota TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+);
+
+CREATE TABLE IF NOT EXISTS carrinho_de_compra (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+);
+
+SHOW TABLES;

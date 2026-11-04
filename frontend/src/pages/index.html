@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecycleWear | Moda Sustentável</title>
+
+    <link rel="stylesheet" href="/frontend/src/pages/style.css">
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <h1>RecycleWear</h1>
+
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#produtos">Produtos</a>
+            <a href="#contato">Contato</a>
+        </nav>
+
+        <button onclick="irParaProdutos()">Comprar</button>
+    </header>
+
+    <!-- Apresentação -->
+    <main id="inicio">
+
+        <section class="apresentacao">
+
+            <div class="texto-apresentacao">
+                <h2>Vista o futuro. Preserve o planeta.</h2>
+
+                <p>
+                    Transformamos plástico retirado dos oceanos
+                    em roupas sustentáveis, unindo moda,
+                    tecnologia e responsabilidade ambiental.
+                </p>
+
+                <button onclick="irParaProdutos()">
+                    Conheça nossos produtos
+                </button>
+            </div>
+
+            <div class="imagem-apresentacao">
+                <div class="simbolo">♻</div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Sobre -->
+    <section id="sobre" class="sobre">
+        <h2>Moda com propósito</h2>
+
+        <p>
+            A RecycleWear acredita que pequenas atitudes
+            podem transformar o mundo. Nosso objetivo é
+            dar uma nova vida aos materiais descartados
+            nos oceanos.
+        </p>
+    </section>
+
+    <!-- Produtos -->
+    <section id="produtos" class="produtos">
+
+        <h2>Nossos produtos</h2>
+
+        <div class="lista-produtos">
+
+            <div class="produto">
+                <h3>Camiseta Sustentável</h3>
+                <img src="/frontend/src/images/camisa_sustentavel.jpg" alt="Camiseta Sustentável" width="300" height="300">
+                <p>Produzida com material reciclado.</p>
+                <span>R$ 79,90</span>
+            </div>
+
+            <div class="produto">
+                <h3>Moletom Ecológico</h3>
+                <img src="/frontend/src/images/moletom_ecologico.jpg" alt="Moletom Ecológico" width="300" height="300">
+                <p>Conforto e sustentabilidade.</p>
+                <span>R$ 149,90</span>
+            </div>
+
+            <div class="produto">
+                <h3>Short Reciclado</h3>
+                <img src="/frontend/src/images/short_reciclado.jpg" alt="Short Reciclado" width="300" height="300">
+                <p>Moda consciente para o dia a dia.</p>
+                <span>R$ 89,90</span>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Rodapé -->
+    <footer id="contato">
+        <p>RecycleWear © 2026 - Moda sustentável.</p>
+    </footer>
+
+    <script src="index.js"></script>
+
+</body>
+</html>
