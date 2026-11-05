@@ -7,16 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RecycleWear | Moda Sustentável</title>
 
-    <link rel="stylesheet" href="/frontend/pages/style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
+    <a
     <!-- Cabeçalho -->
     <header>
         <h1>RecycleWear</h1>
 
         <nav>
+            <a href="#login">Login</a>
             <a href="#inicio">Início</a>
             <a href="#sobre">Sobre</a>
             <a href="#produtos">Produtos</a>
@@ -44,7 +46,6 @@
                     Conheça nossos produtos
                 </button>
             </div>
-
             <div class="imagem-apresentacao">
                 <div class="simbolo">♻</div>
             </div>
@@ -74,28 +75,43 @@
 
             <div class="produto">
                 <h3>Camiseta Sustentável</h3>
-                <img src="/frontend/images/camisa_sustentavel.jpg" alt="Camiseta Sustentável" width="300" height="300">
+                <img src="../images/camisa_sustentavel.jpg" alt="Camiseta Sustentável" width="250" height="250">
                 <p>Produzida com material reciclado.</p>
                 <span>R$ 79,90</span>
+                <button onclick="adicionarAoCarrinho('Camiseta Sustentável', 79.90)">Adicionar ao carrinho</button>
             </div>
 
             <div class="produto">
                 <h3>Moletom Ecológico</h3>
-                <img src="/frontend/images/moletom_ecologico.jpg" alt="Moletom Ecológico" width="300" height="300">
-                <p>Conforto e sustentabilidade.</p>
+                <img src="../images/moletom_ecologico.jpg" alt="Moletom Ecológico" width="250" height="250">
+                <p>Conforto e sustentabilidade para o frio.</p>
                 <span>R$ 149,90</span>
+                <button onclick="adicionarAoCarrinho('Moletom Ecológico', 149.90)">Adicionar ao carrinho</button>
             </div>
 
             <div class="produto">
                 <h3>Short Reciclado</h3>
-                <img src="/frontend/images/short_reciclado.jpg" alt="Short Reciclado" width="300" height="300">
+                <img src="../images/short_reciclado.jpg" alt="Short Reciclado" width="250" height="250">
                 <p>Moda consciente para o dia a dia.</p>
                 <span>R$ 89,90</span>
+                <button onclick="adicionarAoCarrinho('Short Reciclado', 89.90)">Adicionar ao carrinho</button>
             </div>
 
         </div>
 
     </section>
+
+    <div class="login" id="login">
+        <h2>Login</h2>
+        <form onsubmit="return validarLogin()">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required>
+
+            <button type="submit">Entrar</button>
+        </form>
 
     <!-- Rodapé -->
     <footer id="contato">

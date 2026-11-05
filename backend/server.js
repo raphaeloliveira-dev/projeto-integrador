@@ -16,11 +16,12 @@ app.use(express.json());
 app.use('/frontend', express.static(frontendDir));
 app.use('/pages', express.static(path.join(frontendDir, 'pages')));
 app.use('/formularios', express.static(path.join(frontendDir, 'formularios')));
+app.use('/images', express.static(path.join(frontendDir, 'images')));
 
 // Rota inicial
 app.get('/', (req, res) => {
     if (req.accepts('html')) {
-        return res.sendFile(path.join(frontendDir, 'pages', 'index.html'));
+        return res.redirect('/pages/index.html');
     }
 
     res.status(200).json({
@@ -29,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/index.html', (req, res) => {
-    res.sendFile(path.join(frontendDir, 'pages', 'index.html'));
+    res.redirect('/pages/index.html');
 });
 
 // Rotas de clientes
