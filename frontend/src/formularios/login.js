@@ -1,34 +1,48 @@
+const formulario = document.getElementById('formLogin');
 
-const formulario = document.getElementById('formCadastro');
+if (formulario) {
+    formulario.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-formulario.addEventListener('submit', (event) => {
+        const email = document.getElementById('email').value.trim();
+        const senha = document.getElementById('senha').value;
+        const mensagem = document.getElementById('mensagem');
 
-    event.preventDefault();
+        if (!mensagem) {
+            return;
+        }
 
-    const nome = document.getElementById('nome').value;
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
-    const confirmarSenha = document.getElementById('confirmarSenha').value;
-    const endereco = document.getElementById('endereco').value;
-    const telefone = document.getElementById('telefone').value;
+        if (!email || !senha) {
+            mensagem.textContent = 'Informe o e-mail e a senha.';
+            mensagem.style.color = 'red';
+            return;
+        }
 
-    const mensagem = document.getElementById('mensagem');
+        try {
+            const resposta = await fetch('http://localhost:3000/api/clientes/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, senha })
+            });
 
-    if (senha !== confirmarSenha) {
-        mensagem.textContent = 'As senhas não são iguais!';
-        mensagem.style.color = 'red';
-        return;
-    }
+            const resultado = await resposta.json();
 
-    mensagem.textContent = 'Formulário validado com sucesso!';
-    mensagem.style.color = 'green';
+            if (!resposta.ok) {
+                throw new Error(resultado.mensagem || 'Credenciais inválidas.');
+            }
 
-    console.log({
-        nome,
-        email,
-        senha,
-        endereco,
-        telefone
+            mensagem.textContent = resultado.mensagem || 'Login efetuado com sucesso!';
+            mensagem.style.color = 'green';
+            localStorage.setItem('clienteLogado', JSON.stringify(resultado.cliente));
+
+            setTimeout(() => {
+                window.location.href = '../pages/index.html';
+            }, 700);
+        } catch (erro) {
+            mensagem.textContent = erro.message;
+            mensagem.style.color = 'red';
+        }
     });
-
-});
+}

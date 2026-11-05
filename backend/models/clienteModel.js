@@ -15,6 +15,12 @@ const buscarClientePorId = async (id) => {
     return resultado[0];
 };
 
+const buscarClientePorEmail = async (email) => {
+    const sql = 'SELECT * FROM cliente WHERE email = ?';
+    const resultado = await db.query(sql, [email]);
+    return resultado[0] || null;
+};
+
 // Cadastrar cliente
 const cadastrarCliente = async (nome, email, senha) => {
     const sql = `
@@ -24,6 +30,22 @@ const cadastrarCliente = async (nome, email, senha) => {
 
     const resultado = await db.query(sql, [nome, email, senha]);
     return resultado;
+};
+
+const cadastrarCadastro = async ({ nome, email, senha, endereco, telefone }) => {
+    const sql = `
+        INSERT INTO cadastro (nome, email, senha, endereco, telefone)
+        VALUES (?, ?, ?, ?, ?)
+    `;
+
+    const resultado = await db.query(sql, [nome, email, senha, endereco, telefone]);
+    return resultado;
+};
+
+const loginCliente = async (email, senha) => {
+    const sql = 'SELECT * FROM cliente WHERE email = ? AND senha = ?';
+    const resultado = await db.query(sql, [email, senha]);
+    return resultado[0] || null;
 };
 
 // Atualizar cliente
@@ -48,7 +70,10 @@ const excluirCliente = async (id) => {
 module.exports = {
     listarClientes,
     buscarClientePorId,
+    buscarClientePorEmail,
     cadastrarCliente,
+    cadastrarCadastro,
+    loginCliente,
     atualizarCliente,
     excluirCliente
 };
