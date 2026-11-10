@@ -24,10 +24,6 @@
             <a href="../formularios/cadastro.html">Cadastro</a>
         </nav>
 
-        <button onclick="irParaProdutos()">Comprar</button>
-        <a class="botao-carrinho" href="../formularios/carrinho.html">
-            🛒 Carrinho <span id="quantidadeCarrinho" aria-live="polite">0</span>
-        </a>
     </header>
 
     <!-- Apresentação -->
@@ -107,63 +103,5 @@
     <footer id="contato">
         <p>RecycleWear © 2026 - Moda sustentável - +55 (11) 98718-4298</p>
     </footer>
-
-    <script>
-        function irParaProdutos() {
-            document.getElementById('produtos').scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-
-        const chaveCarrinho = 'recycleWearCarrinho';
-        const quantidadeCarrinho = document.getElementById('quantidadeCarrinho');
-
-        function carregarCarrinho() {
-            try {
-                const itensSalvos = JSON.parse(localStorage.getItem(chaveCarrinho) || '[]');
-                if (Array.isArray(itensSalvos) && itensSalvos.every((item) =>
-                    typeof item.nome === 'string' &&
-                    item.nome.length > 0 &&
-                    Number.isFinite(item.preco) &&
-                    item.preco > 0 &&
-                    Number.isInteger(item.quantidade) &&
-                    item.quantidade > 0
-                )) {
-                    return itensSalvos;
-                }
-            } catch (erro) {
-                console.error('Não foi possível carregar o carrinho salvo.', erro);
-            }
-
-            return [];
-        }
-
-        function adicionarAoCarrinho(nome, preco) {
-            if (typeof nome !== 'string' || !Number.isFinite(preco) || preco <= 0) {
-                console.error('Produto inválido para adicionar ao carrinho.');
-                return;
-            }
-
-            const carrinho = carregarCarrinho();
-            const item = carrinho.find((produto) => produto.nome === nome);
-            if (item) {
-                item.quantidade += 1;
-            } else {
-                carrinho.push({ nome, preco, quantidade: 1 });
-            }
-
-            localStorage.setItem(chaveCarrinho, JSON.stringify(carrinho));
-            atualizarQuantidadeCarrinho();
-        }
-
-        function atualizarQuantidadeCarrinho() {
-            const quantidade = carregarCarrinho().reduce((soma, item) => soma + item.quantidade, 0);
-            quantidadeCarrinho.textContent = quantidade;
-        }
-
-        window.addEventListener('storage', atualizarQuantidadeCarrinho);
-        atualizarQuantidadeCarrinho();
-    </script>
-
 </body>
 </html>
