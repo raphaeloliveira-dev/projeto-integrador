@@ -8,10 +8,12 @@ const clienteRoutes = require('./routes/clienteRoutes');
 
 const app = express();
 const PORTA = process.env.PORT || 3000;
+const rootDir = path.join(__dirname, '..');
 const frontendDir = path.join(__dirname, '../frontend/src');
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(rootDir));
 
 app.use('/frontend', express.static(frontendDir));
 app.use('/pages', express.static(path.join(frontendDir, 'pages')));

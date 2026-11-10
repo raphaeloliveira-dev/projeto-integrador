@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -13,15 +12,17 @@
 <body>
     <!-- Cabeçalho -->
     <header>
-        <h1>RecycleWear</h1>
+        <h1>♻️RecycleWear</h1>
 
         <nav>
-            <a href="#login">Login</a>
             <a href="#inicio">Início</a>
             <a href="#sobre">Sobre</a>
             <a href="#produtos">Produtos</a>
             <a href="#contato">Contato</a>
             <a href="../formularios/cadastro.html">Cadastro</a>
+            <a class="botao-carrinho" href="../formularios/carrinho.html">
+                Carrinho <span id="quantidadeCarrinho" aria-label="0 itens no carrinho">0</span>
+            </a>
         </nav>
 
     </header>
@@ -103,5 +104,6 @@
     <footer id="contato">
         <p>RecycleWear © 2026 - Moda sustentável - +55 (11) 98718-4298</p>
     </footer>
+    <script src="../formularios/carrinho.js"></script>
 </body>
 </html>

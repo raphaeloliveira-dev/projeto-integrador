@@ -46,6 +46,10 @@ nav a {
     transition: 0.3s;
 }
 
+nav a:not(.botao-carrinho) {
+    font-size: 20px;
+}
+
 nav a:hover {
     color: var(--azul);
     transform: translateY(-3px);
