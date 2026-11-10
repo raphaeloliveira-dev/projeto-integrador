@@ -1,5 +1,14 @@
 
 /* CONFIGURAÇÕES GERAIS */
+:root {
+    --azul-principal: #3c90c8;
+    --azul-secundario: #1827c7;
+    --ciano: #bfeef1;
+    --azul: #122d87;
+    --branco: #FFFFFF;
+    --texto: #26332C;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,8 +17,8 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #F2F0E8;
-    color: #26332C;
+    background-color: var(--ciano);
+    color: var(--ciano);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -22,7 +31,7 @@ body.pagina-login {
 
 /* CABEÇALHO */
 header {
-    background-color: #174C3C;
+    background-color: var(--azul-principal);
     color: white;
     padding: 20px 5%;
     display: flex;
@@ -42,7 +51,7 @@ header nav a {
 }
 
 header nav a:hover {
-    color: #D9A441;
+    color: var(--azul);
 }
 
 /* CONTEÚDO */
@@ -73,7 +82,7 @@ body.pagina-login .container-cadastro {
 }
 
 .formulario h2 {
-    color: #174C3C;
+    color: var(--azul-principal);
     text-align: center;
     font-size: 28px;
     margin-bottom: 12px;
@@ -81,7 +90,7 @@ body.pagina-login .container-cadastro {
 
 .subtitulo {
     text-align: center;
-    color: #777;
+    color: var(--azul-secundario);
     font-size: 14px;
     margin-bottom: 30px;
 }
@@ -97,7 +106,7 @@ body.pagina-login .container-cadastro {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 8px;
-    color: #174C3C;
+    color: var(--azul-principal);
 }
 
 .campo input {
@@ -111,8 +120,8 @@ body.pagina-login .container-cadastro {
 }
 
 .campo input:focus {
-    border-color: #70A88A;
-    box-shadow: 0 0 6px rgba(112, 168, 138, 0.35);
+    border-color: var(--azul-secundario);
+    box-shadow: 0 0 6px rgba(24, 39, 199, 0.35);
 }
 
 /* BOTÃO */
@@ -120,7 +129,7 @@ body.pagina-login .container-cadastro {
     width: 100%;
     padding: 14px;
     margin-top: 10px;
-    background-color: #174C3C;
+    background-color: var(--azul-principal);
     color: white;
     border: none;
     border-radius: 8px;
@@ -131,7 +140,7 @@ body.pagina-login .container-cadastro {
 }
 
 .formulario button:hover {
-    background-color: #70A88A;
+    background-color: (--azul-secundario);
     transform: translateY(-2px);
 }
 
@@ -150,9 +159,12 @@ body.pagina-login .container-cadastro {
 }
 
 .link-login a {
-    color: #174C3C;
-    font-weight: bold;
-    text-decoration: none;
+.subtitulo {
+    text-align: center;
+    color: var(--azul-secundario);
+    font-size: 14px;
+    margin-bottom: 30px;
+}
 }
 
 .link-login a:hover {
@@ -161,7 +173,7 @@ body.pagina-login .container-cadastro {
 
 /* RODAPÉ */
 footer {
-    background-color: #174C3C;
+    background-color: var(--azul-principal);
     color: white;
     text-align: center;
     padding: 22px;

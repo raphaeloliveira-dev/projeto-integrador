@@ -11,8 +11,6 @@
 </head>
 
 <body>
-
-    <a
     <!-- Cabeçalho -->
     <header>
         <h1>RecycleWear</h1>
@@ -23,9 +21,13 @@
             <a href="#sobre">Sobre</a>
             <a href="#produtos">Produtos</a>
             <a href="#contato">Contato</a>
+            <a href="../formularios/cadastro.html">Cadastro</a>
         </nav>
 
         <button onclick="irParaProdutos()">Comprar</button>
+        <a class="botao-carrinho" href="../formularios/carrinho.html">
+            🛒 Carrinho <span id="quantidadeCarrinho" aria-live="polite">0</span>
+        </a>
     </header>
 
     <!-- Apresentação -->
@@ -47,7 +49,7 @@
                 </button>
             </div>
             <div class="imagem-apresentacao">
-                <div class="simbolo">♻</div>
+                <img src="../images/logo.png" alt="Logo OceanWear, moda sustentável" width="700" height="700">
             </div>
 
         </section>
@@ -75,7 +77,7 @@
 
             <div class="produto">
                 <h3>Camiseta Sustentável</h3>
-                <img src="../images/camisa_sustentavel.jpg" alt="Camiseta Sustentável" width="250" height="250">
+                <img src="../images/camiseta.jpg" alt="Camiseta Sustentável" width="250" height="250">
                 <p>Produzida com material reciclado.</p>
                 <span>R$ 79,90</span>
                 <button onclick="adicionarAoCarrinho('Camiseta Sustentável', 79.90)">Adicionar ao carrinho</button>
@@ -83,7 +85,7 @@
 
             <div class="produto">
                 <h3>Moletom Ecológico</h3>
-                <img src="../images/moletom_ecologico.jpg" alt="Moletom Ecológico" width="250" height="250">
+                <img src="../images/moletom.jpg" alt="Moletom Ecológico" width="250" height="250">
                 <p>Conforto e sustentabilidade para o frio.</p>
                 <span>R$ 149,90</span>
                 <button onclick="adicionarAoCarrinho('Moletom Ecológico', 149.90)">Adicionar ao carrinho</button>
@@ -91,7 +93,7 @@
 
             <div class="produto">
                 <h3>Short Reciclado</h3>
-                <img src="../images/short_reciclado.jpg" alt="Short Reciclado" width="250" height="250">
+                <img src="../images/short_reciclado.png" alt="Short Reciclado" width="250" height="250">
                 <p>Moda consciente para o dia a dia.</p>
                 <span>R$ 89,90</span>
                 <button onclick="adicionarAoCarrinho('Short Reciclado', 89.90)">Adicionar ao carrinho</button>
@@ -101,24 +103,67 @@
 
     </section>
 
-    <div class="login" id="login">
-        <h2>Login</h2>
-        <form onsubmit="return validarLogin()">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" required>
-
-            <button type="submit">Entrar</button>
-        </form>
-
     <!-- Rodapé -->
     <footer id="contato">
-        <p>RecycleWear © 2026 - Moda sustentável.</p>
+        <p>RecycleWear © 2026 - Moda sustentável - +55 (11) 98718-4298</p>
     </footer>
 
-    <script src="index.js"></script>
+    <script>
+        function irParaProdutos() {
+            document.getElementById('produtos').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        const chaveCarrinho = 'recycleWearCarrinho';
+        const quantidadeCarrinho = document.getElementById('quantidadeCarrinho');
+
+        function carregarCarrinho() {
+            try {
+                const itensSalvos = JSON.parse(localStorage.getItem(chaveCarrinho) || '[]');
+                if (Array.isArray(itensSalvos) && itensSalvos.every((item) =>
+                    typeof item.nome === 'string' &&
+                    item.nome.length > 0 &&
+                    Number.isFinite(item.preco) &&
+                    item.preco > 0 &&
+                    Number.isInteger(item.quantidade) &&
+                    item.quantidade > 0
+                )) {
+                    return itensSalvos;
+                }
+            } catch (erro) {
+                console.error('Não foi possível carregar o carrinho salvo.', erro);
+            }
+
+            return [];
+        }
+
+        function adicionarAoCarrinho(nome, preco) {
+            if (typeof nome !== 'string' || !Number.isFinite(preco) || preco <= 0) {
+                console.error('Produto inválido para adicionar ao carrinho.');
+                return;
+            }
+
+            const carrinho = carregarCarrinho();
+            const item = carrinho.find((produto) => produto.nome === nome);
+            if (item) {
+                item.quantidade += 1;
+            } else {
+                carrinho.push({ nome, preco, quantidade: 1 });
+            }
+
+            localStorage.setItem(chaveCarrinho, JSON.stringify(carrinho));
+            atualizarQuantidadeCarrinho();
+        }
+
+        function atualizarQuantidadeCarrinho() {
+            const quantidade = carregarCarrinho().reduce((soma, item) => soma + item.quantidade, 0);
+            quantidadeCarrinho.textContent = quantidade;
+        }
+
+        window.addEventListener('storage', atualizarQuantidadeCarrinho);
+        atualizarQuantidadeCarrinho();
+    </script>
 
 </body>
 </html>

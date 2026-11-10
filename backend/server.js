@@ -33,6 +33,17 @@ app.get('/index.html', (req, res) => {
     res.redirect('/pages/index.html');
 });
 
+const redirectToFormulario = (page) => (req, res) => {
+    res.redirect(`/formularios/${page}.html`);
+};
+
+app.get('/cadastro', redirectToFormulario('cadastro'));
+app.get('/login', redirectToFormulario('login'));
+app.get('/pages/cadastro', redirectToFormulario('cadastro'));
+app.get('/pages/login', redirectToFormulario('login'));
+app.get('/frontend/src/pages/cadastro', redirectToFormulario('cadastro'));
+app.get('/frontend/src/pages/login', redirectToFormulario('login'));
+
 // Rotas de clientes
 app.use('/api/clientes', clienteRoutes);
 

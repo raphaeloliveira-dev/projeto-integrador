@@ -1,10 +1,10 @@
 
 /* Variáveis globais */
 :root {
-    --verde-principal: #174C3C;
-    --verde-secundario: #70A88A;
-    --bege: #F2F0E8;
-    --amarelo: #D9A441;
+    --azul-principal: #3c90c8;
+    --azul-secundario: #1827c7;
+    --ciano: #bfeef1;
+    --azul: #122d87;
     --branco: #FFFFFF;
     --texto: #26332C;
 }
@@ -18,19 +18,20 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: var(--bege);
+    background-color: var(--ciano);
     color: var(--texto);
 }
 
 /* Cabeçalho */
 header {
-    background-color: var(--verde-principal);
+    background-color: var(--azul-principal);
     color: var(--branco);
     padding: 20px 40px;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
 }
 
 /* Menu */
@@ -46,7 +47,7 @@ nav a {
 }
 
 nav a:hover {
-    color: var(--amarelo);
+    color: var(--azul);
     transform: translateY(-3px);
 }
 
@@ -60,7 +61,7 @@ main {
 
 /* Botões */
 button {
-    background-color: var(--verde-principal);
+    background-color: var(--azul-principal);
     color: var(--branco);
     border: none;
     padding: 12px 25px;
@@ -70,8 +71,39 @@ button {
 }
 
 button:hover {
-    background-color: var(--verde-secundario);
+    background-color: var(--azul-secundario);
     transform: translateY(-3px);
+}
+
+.botao-carrinho {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 18px;
+    border-radius: 8px;
+    background: var(--branco);
+    color: var(--azul-principal);
+    font-weight: bold;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.botao-carrinho:hover {
+    background: #e8f4fa;
+    transform: translateY(-3px);
+}
+
+.botao-carrinho span {
+    display: inline-grid;
+    place-items: center;
+    min-width: 22px;
+    height: 22px;
+    margin-left: 4px;
+    padding: 0 5px;
+    border-radius: 50%;
+    background: white;
+    color: var(--azul-principal);
+    font-weight: bold;
 }
 
 /* Animação */
@@ -118,17 +150,15 @@ button:hover {
 .imagem-apresentacao {
     flex: 1;
     height: 300px;
-    background-color: var(--verde-secundario);
-    border-radius: 20px;
-
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.simbolo {
-    font-size: 120px;
-    color: white;
+.imagem-apresentacao img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 /* Sobre */
@@ -192,7 +222,7 @@ button:hover {
 
 /* Rodapé */
 footer {
-    background-color: var(--verde-principal);
+    background-color: var(--azul-principal);
     color: white;
     text-align: center;
     padding: 25px;
@@ -213,6 +243,7 @@ footer {
         flex-wrap: wrap;
         justify-content: center;
     }
+
 }
 
 
