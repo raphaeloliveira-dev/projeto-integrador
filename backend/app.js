@@ -9,6 +9,7 @@ const compraRoutes = require('./compra/compra-Routes/compraRoutes');
 const consultaRoutes = require('./consulta/consultaRoutes/consultaRoutes');
 const loginRoutes = require('./login/login-Routes/loginRoutes');
 const notaFiscalRoutes = require('./nota-fiscal/noda-fiscal-routes/nota-fiscal-Routes');
+const produtoRoutes = require('./produto/produto-routes/produto-Routes');
 const vendaRoutes = require('./venda/venda-Routes/vendaRoutes');
 
 const app = express();
@@ -63,6 +64,9 @@ app.use('/nota-fiscal', notaFiscalRoutes);
 app.use('/api/vendas', vendaRoutes);
 app.use('/vendas', vendaRoutes);
 app.use('/venda', vendaRoutes);
+app.use('/api/produtos', produtoRoutes);
+app.use('/produtos', produtoRoutes);
+app.use('/produto', produtoRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ mensagem: 'Rota não encontrada.' });

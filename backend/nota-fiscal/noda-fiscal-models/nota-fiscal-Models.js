@@ -18,4 +18,28 @@ const listarNotasFiscaisPorCliente = async (clienteId) => db.query(
     [clienteId]
 );
 
-module.exports = { criarNotaFiscal, listarNotasFiscais, listarNotasFiscaisPorCliente };
+const atualizarNotaFiscal = async (id, total) => {
+    const resultado = await db.query('UPDATE nota_fiscal SET total = ? WHERE id = ?', [
+        total,
+        id
+    ]);
+    if (resultado.affectedRows > 0) {
+        return resultado;
+    }
+
+    const existente = await db.query('SELECT id FROM nota_fiscal WHERE id = ?', [id]);
+    return { affectedRows: existente.length };
+};
+
+const excluirNotaFiscal = async (id) => db.query(
+    'DELETE FROM nota_fiscal WHERE id = ?',
+    [id]
+);
+
+module.exports = {
+    criarNotaFiscal,
+    listarNotasFiscais,
+    listarNotasFiscaisPorCliente,
+    atualizarNotaFiscal,
+    excluirNotaFiscal
+};

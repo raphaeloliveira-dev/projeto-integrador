@@ -18,6 +18,15 @@ CREATE TABLE IF NOT EXISTS cadastro (
     telefone VARCHAR(20) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS produto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    preco DECIMAL(10, 2) NOT NULL,
+    quantidade INT NOT NULL DEFAULT 0,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS consulta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cliente_id INT NOT NULL,
@@ -65,3 +74,13 @@ CREATE TABLE IF NOT EXISTS carrinho_de_compra (
 );
 
 SHOW TABLES;
+
+SELECT * FROM cliente;
+SELECT * FROM cadastro;
+SELECT * FROM produto;
+SELECT * FROM consulta;
+SELECT * FROM login;
+SELECT * FROM compra;
+SELECT * FROM venda;
+SELECT * FROM nota_fiscal;
+SELECT * FROM carrinho_de_compra;

@@ -22,20 +22,66 @@ const loginCliente = async (email, senha) => {
 
 // Atualizar cliente
 const atualizarCliente = async (id, nome, email) => {
-    const sql = `
-        UPDATE cliente
-        SET nome = ?, email = ?
-        WHERE id = ?
-    `;
+    const conexao = await db.getConnection();
 
-    return db.query(sql, [nome, email, id]);
+    try {
+        await conexao.beginTransaction();
+        const clientes = await conexao.query('SELECT email FROM cliente WHERE id = ?', [id]);
+        if (clientes.length === 0) {
+            await conexao.rollback();
+            return { affectedRows: 0 };
+        }
+
+        await conexao.query(
+            'UPDATE cliente SET nome = ?, email = ? WHERE id = ?',
+            [nome, email, id]
+        );
+        await conexao.query(
+            'UPDATE cadastro SET nome = ?, email = ? WHERE email = ?',
+            [nome, email, clientes[0].email]
+        );
+        await conexao.commit();
+        return { affectedRows: 1 };
+    } catch (erro) {
+        await conexao.rollback();
+        throw erro;
+    } finally {
+        conexao.release();
+    }
 };
 
 // Excluir cliente
 const excluirCliente = async (id) => {
-    const sql = 'DELETE FROM cliente WHERE id = ?';
-    const resultado = await db.query(sql, [id]);
-    return resultado;
+    const conexao = await db.getConnection();
+
+    try {
+        await conexao.beginTransaction();
+        const clientes = await conexao.query('SELECT email FROM cliente WHERE id = ?', [id]);
+        if (clientes.length === 0) {
+            await conexao.rollback();
+            return { affectedRows: 0 };
+        }
+
+        for (const tabela of [
+            'consulta',
+            'login',
+            'compra',
+            'venda',
+            'nota_fiscal',
+            'carrinho_de_compra'
+        ]) {
+            await conexao.query(`DELETE FROM ${tabela} WHERE cliente_id = ?`, [id]);
+        }
+        await conexao.query('DELETE FROM cadastro WHERE email = ?', [clientes[0].email]);
+        await conexao.query('DELETE FROM cliente WHERE id = ?', [id]);
+        await conexao.commit();
+        return { affectedRows: 1 };
+    } catch (erro) {
+        await conexao.rollback();
+        throw erro;
+    } finally {
+        conexao.release();
+    }
 };
 
 module.exports = {

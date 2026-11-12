@@ -13,6 +13,37 @@ const criarNotaFiscal = async (req, res) => {
     }
 };
 
+const atualizarNotaFiscal = async (req, res) => {
+    try {
+        const resultado = await notaFiscalModels.atualizarNotaFiscal(
+            req.params.id,
+            req.body.total
+        );
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({ mensagem: 'Nota fiscal não encontrada.' });
+        }
+
+        res.status(200).json({ mensagem: 'Nota fiscal atualizada com sucesso.' });
+    } catch (erro) {
+        console.error('Erro ao atualizar nota fiscal:', erro);
+        res.status(500).json({ mensagem: 'Erro ao atualizar nota fiscal.' });
+    }
+};
+
+const excluirNotaFiscal = async (req, res) => {
+    try {
+        const resultado = await notaFiscalModels.excluirNotaFiscal(req.params.id);
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({ mensagem: 'Nota fiscal não encontrada.' });
+        }
+
+        res.status(200).json({ mensagem: 'Nota fiscal excluída com sucesso.' });
+    } catch (erro) {
+        console.error('Erro ao excluir nota fiscal:', erro);
+        res.status(500).json({ mensagem: 'Erro ao excluir nota fiscal.' });
+    }
+};
+
 const listarNotasFiscais = async (req, res) => {
     try {
         const notas = req.params.clienteId
@@ -25,4 +56,9 @@ const listarNotasFiscais = async (req, res) => {
     }
 };
 
-module.exports = { criarNotaFiscal, listarNotasFiscais };
+module.exports = {
+    criarNotaFiscal,
+    listarNotasFiscais,
+    atualizarNotaFiscal,
+    excluirNotaFiscal
+};

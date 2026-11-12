@@ -9,7 +9,8 @@ const validarIdCliente = (req, res, next) => {
 };
 
 const validarAtualizacaoCliente = (req, res, next) => {
-    const { nome, email } = req.body || {};
+    const { nome } = req.body || {};
+    const email = req.body?.email ?? req.body?.['e-mail'];
     if (typeof nome !== 'string' || !nome.trim() ||
         typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
         return res.status(400).json({

@@ -18,4 +18,22 @@ const listarComprasPorCliente = async (clienteId) => db.query(
     [clienteId]
 );
 
-module.exports = { criarCompra, listarCompras, listarComprasPorCliente };
+const atualizarCompra = async (id, total) => {
+    const resultado = await db.query('UPDATE compra SET total = ? WHERE id = ?', [total, id]);
+    if (resultado.affectedRows > 0) {
+        return resultado;
+    }
+
+    const existente = await db.query('SELECT id FROM compra WHERE id = ?', [id]);
+    return { affectedRows: existente.length };
+};
+
+const excluirCompra = async (id) => db.query('DELETE FROM compra WHERE id = ?', [id]);
+
+module.exports = {
+    criarCompra,
+    listarCompras,
+    listarComprasPorCliente,
+    atualizarCompra,
+    excluirCompra
+};

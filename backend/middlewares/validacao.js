@@ -17,7 +17,17 @@ const validarClienteId = (req, res, next) => {
     next();
 };
 
-const validarMovimentacao = (req, res, next) => {
+const validarIdRegistro = (req, res, next) => {
+    const id = req.params.id;
+    if (typeof id !== 'string' || !/^[1-9]\d*$/.test(id) || !Number.isSafeInteger(Number(id))) {
+        return res.status(400).json({ mensagem: 'Informe um ID válido.' });
+    }
+
+    req.params.id = String(Number(id));
+    next();
+};
+
+const validarTotal = (req, res, next) => {
     const valor = req.body?.total;
     const total = typeof valor === 'number'
         ? valor
@@ -33,4 +43,28 @@ const validarMovimentacao = (req, res, next) => {
     next();
 };
 
-module.exports = { validarClienteId, validarMovimentacao };
+const validarMovimentacao = (req, res, next) => {
+    const origem = req.params.clienteId === undefined
+        ? req.body?.cliente_id
+        : req.params.clienteId;
+    const clienteId = Number(origem);
+
+    if (!Number.isSafeInteger(clienteId) || clienteId < 1) {
+        return res.status(400).json({ mensagem: 'Informe um ID de cliente válido.' });
+    }
+
+    if (req.params.clienteId !== undefined) {
+        req.params.clienteId = String(clienteId);
+    } else {
+        req.body.cliente_id = clienteId;
+    }
+
+    validarTotal(req, res, next);
+};
+
+module.exports = {
+    validarClienteId,
+    validarIdRegistro,
+    validarMovimentacao,
+    validarTotal
+};

@@ -10,6 +10,37 @@ const criarCarrinho = async (req, res) => {
     }
 };
 
+const atualizarCarrinho = async (req, res) => {
+    try {
+        const resultado = await carrinhoModels.atualizarCarrinho(
+            req.params.id,
+            req.body.cliente_id
+        );
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({ mensagem: 'Carrinho não encontrado.' });
+        }
+
+        res.status(200).json({ mensagem: 'Carrinho atualizado com sucesso.' });
+    } catch (erro) {
+        console.error('Erro ao atualizar carrinho:', erro);
+        res.status(500).json({ mensagem: 'Erro ao atualizar carrinho.' });
+    }
+};
+
+const excluirCarrinho = async (req, res) => {
+    try {
+        const resultado = await carrinhoModels.excluirCarrinho(req.params.id);
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({ mensagem: 'Carrinho não encontrado.' });
+        }
+
+        res.status(200).json({ mensagem: 'Carrinho excluído com sucesso.' });
+    } catch (erro) {
+        console.error('Erro ao excluir carrinho:', erro);
+        res.status(500).json({ mensagem: 'Erro ao excluir carrinho.' });
+    }
+};
+
 const listarCarrinhos = async (req, res) => {
     try {
         const carrinhos = req.params.clienteId
@@ -22,4 +53,9 @@ const listarCarrinhos = async (req, res) => {
     }
 };
 
-module.exports = { criarCarrinho, listarCarrinhos };
+module.exports = {
+    criarCarrinho,
+    listarCarrinhos,
+    atualizarCarrinho,
+    excluirCarrinho
+};
