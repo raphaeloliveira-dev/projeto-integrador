@@ -1,5 +1,5 @@
 
-const clienteModel = require('../models/clienteModel');
+const clienteModel = require('../models-cliente/clienteModel');
 
 // Listar clientes
 const listarClientes = async (req, res) => {
@@ -7,9 +7,9 @@ const listarClientes = async (req, res) => {
         const clientes = await clienteModel.listarClientes();
         res.status(200).json(clientes);
     } catch (erro) {
+        console.error('Erro ao listar clientes:', erro);
         res.status(500).json({
-            mensagem: 'Erro ao listar clientes',
-            erro: erro.message
+            mensagem: 'Erro ao listar clientes.'
         });
     }
 };
@@ -28,9 +28,9 @@ const buscarClientePorId = async (req, res) => {
 
         res.status(200).json(cliente);
     } catch (erro) {
+        console.error('Erro ao buscar cliente:', erro);
         res.status(500).json({
-            mensagem: 'Erro ao buscar cliente',
-            erro: erro.message
+            mensagem: 'Erro ao buscar cliente.'
         });
     }
 };
@@ -62,57 +62,9 @@ const loginCliente = async (req, res) => {
             }
         });
     } catch (erro) {
+        console.error('Erro ao fazer login:', erro);
         res.status(500).json({
-            mensagem: 'Erro ao fazer login',
-            erro: erro.message
-        });
-    }
-};
-
-// Cadastrar cliente
-const cadastrarCliente = async (req, res) => {
-    try {
-        const { nome, email, senha, endereco, telefone } = req.body;
-
-        if (!nome || !email || !senha) {
-            return res.status(400).json({
-                mensagem: 'Nome, e-mail e senha são obrigatórios.'
-            });
-        }
-
-        const clienteExistente = await clienteModel.buscarClientePorEmail(email);
-
-        if (clienteExistente) {
-            return res.status(409).json({
-                mensagem: 'Já existe um cliente cadastrado com este e-mail.'
-            });
-        }
-
-        const resultado = await clienteModel.cadastrarCliente(nome, email, senha);
-
-        if (endereco || telefone) {
-            await clienteModel.cadastrarCadastro({
-                nome,
-                email,
-                senha,
-                endereco: endereco || '',
-                telefone: telefone || ''
-            });
-        }
-
-        res.status(201).json({
-            mensagem: 'Cliente cadastrado com sucesso!',
-            id: Number(resultado.insertId),
-            cliente: {
-                id: Number(resultado.insertId),
-                nome,
-                email
-            }
-        });
-    } catch (erro) {
-        res.status(500).json({
-            mensagem: 'Erro ao cadastrar cliente',
-            erro: erro.message
+            mensagem: 'Erro ao fazer login.'
         });
     }
 };
@@ -123,17 +75,23 @@ const atualizarCliente = async (req, res) => {
         const { id } = req.params;
         const { nome, email } = req.body;
 
-        const resultado = await clienteModel.atualizarCliente(
-            id, nome, email
-        );
+        const resultado = await clienteModel.atualizarCliente(id, nome, email);
+
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({ mensagem: 'Cliente não encontrado.' });
+        }
 
         res.status(200).json({
             mensagem: 'Cliente atualizado com sucesso!'
         });
     } catch (erro) {
+        if (erro.code === 'ER_DUP_ENTRY' || erro.errno === 1062) {
+            return res.status(409).json({ mensagem: 'Já existe um cliente com este e-mail.' });
+        }
+
+        console.error('Erro ao atualizar cliente:', erro);
         res.status(500).json({
-            mensagem: 'Erro ao atualizar cliente',
-            erro: erro.message
+            mensagem: 'Erro ao atualizar cliente.'
         });
     }
 };
@@ -143,15 +101,19 @@ const excluirCliente = async (req, res) => {
     try {
         const { id } = req.params;
 
-        await clienteModel.excluirCliente(id);
+        const resultado = await clienteModel.excluirCliente(id);
+
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({ mensagem: 'Cliente não encontrado.' });
+        }
 
         res.status(200).json({
             mensagem: 'Cliente excluído com sucesso!'
         });
     } catch (erro) {
+        console.error('Erro ao excluir cliente:', erro);
         res.status(500).json({
-            mensagem: 'Erro ao excluir cliente',
-            erro: erro.message
+            mensagem: 'Erro ao excluir cliente.'
         });
     }
 };
@@ -160,7 +122,6 @@ module.exports = {
     listarClientes,
     buscarClientePorId,
     loginCliente,
-    cadastrarCliente,
     atualizarCliente,
     excluirCliente
 };
