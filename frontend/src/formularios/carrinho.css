@@ -106,14 +106,18 @@ body {
 
 .imagem-item-carrinho {
     display: grid;
+    min-width: 0;
     width: 100%;
-    height: 210px;
+    aspect-ratio: 1;
+    overflow: hidden;
     place-items: center;
     background: #f3f2ef;
 }
 
 .imagem-item-carrinho img {
     display: block;
+    max-width: 100%;
+    max-height: 100%;
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -315,10 +319,6 @@ body {
         gap: 18px;
         min-height: 180px;
         padding: 18px 0;
-    }
-
-    .imagem-item-carrinho {
-        height: 150px;
     }
 
     .subtotal-item {
