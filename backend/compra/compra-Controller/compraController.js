@@ -1,5 +1,49 @@
 const compraModels = require('../compra-Models/compraModels');
 
+const finalizarCompra = async (req, res) => {
+    const { cliente_id, itens } = req.body;
+
+    if (!Number.isSafeInteger(Number(cliente_id)) || Number(cliente_id) < 1) {
+        return res.status(400).json({ mensagem: 'Faça login para finalizar a compra.' });
+    }
+
+    if (!Array.isArray(itens) || itens.length === 0) {
+        return res.status(400).json({ mensagem: 'O carrinho está vazio.' });
+    }
+
+    const itensValidos = itens.every((item) =>
+        Number.isSafeInteger(Number(item.id)) &&
+        Number(item.id) > 0 &&
+        Number.isSafeInteger(Number(item.quantidade)) &&
+        Number(item.quantidade) > 0
+    );
+
+    if (!itensValidos) {
+        return res.status(400).json({ mensagem: 'Os itens do carrinho são inválidos.' });
+    }
+
+    try {
+        const resultado = await compraModels.finalizarCompra(
+            cliente_id,
+            itens.map((item) => ({
+                id: Number(item.id),
+                quantidade: Number(item.quantidade)
+            }))
+        );
+        res.status(201).json({
+            mensagem: 'Compra registrada e nota fiscal emitida!',
+            ...resultado
+        });
+    } catch (erro) {
+        if (erro.message === 'Produto não encontrado.' ||
+            erro.message.startsWith('Estoque insuficiente')) {
+            return res.status(400).json({ mensagem: erro.message });
+        }
+        console.error('Erro ao finalizar compra:', erro);
+        res.status(500).json({ mensagem: 'Erro ao finalizar compra.' });
+    }
+};
+
 const criarCompra = async (req, res) => {
     try {
         const id = await compraModels.criarCompra(req.body.cliente_id, req.body.total);
@@ -50,4 +94,4 @@ const listarCompras = async (req, res) => {
     }
 };
 
-module.exports = { criarCompra, listarCompras, atualizarCompra, excluirCompra };
+module.exports = { finalizarCompra, criarCompra, listarCompras, atualizarCompra, excluirCompra };

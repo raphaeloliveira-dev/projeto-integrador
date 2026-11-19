@@ -8,6 +8,7 @@ const {
 } = require('../compra-Middleware/compraMiddleware');
 
 const router = express.Router();
+router.post('/finalizar', compraController.finalizarCompra);
 router.post('/', validarClienteId, validarMovimentacao, compraController.criarCompra);
 router.get('/', compraController.listarCompras);
 router.get('/cliente/:clienteId', validarClienteId, compraController.listarCompras);

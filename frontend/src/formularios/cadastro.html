@@ -9,106 +9,73 @@
     <link rel="stylesheet" href="cadastro.css">
 </head>
 
-<body>
-
-    <header>
-        <h1>RecycleWear</h1>
-
-        <nav>
-            <a href="../pages/index.html">Início</a>
-        </nav>
+<body class="pagina-auth pagina-cadastro">
+    <header class="cabecalho-auth">
+        <a class="marca-auth" href="../pages/index.html">RECYCLE<span>WEAR</span></a>
+        <a class="link-inicio" href="../pages/index.html">Voltar à loja <span>↗</span></a>
     </header>
 
-    <main class="container-cadastro">
+    <main class="auth-layout">
+        <section class="auth-editorial" aria-label="RecycleWear, moda consciente">
+            <img src="../images/bermuda-linho-verde.webp" alt="Bermuda de linho verde da coleção RecycleWear">
+            <div class="auth-editorial-copy">
+                <p>ROUPA COM OUTRA HISTÓRIA</p>
+                <h1>Um novo ciclo<br>para vestir.</h1>
+            </div>
+        </section>
 
-        <div class="formulario">
+        <section class="auth-form-area">
+            <div class="formulario">
+                <p class="etiqueta-form">FAÇA PARTE DA RECYCLEWEAR</p>
+                <h2>Crie sua conta.</h2>
+                <p class="subtitulo">Moda consciente começa com boas escolhas.</p>
 
-            <h2>Crie sua conta</h2>
+                <form id="formCadastro" autocomplete="off">
+                    <div class="campo">
+                        <label for="nome">Nome completo</label>
+                        <input type="text" id="nome" autocomplete="name" placeholder="Seu nome" required>
+                    </div>
 
-            <p class="subtitulo">
-                Faça parte de uma moda mais sustentável!
-            </p>
+                    <div class="campo">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" autocomplete="off" required>
+                    </div>
 
-            <form id="formCadastro">
+                    <div class="campo">
+                        <label for="senha">Senha</label>
+                        <input type="password" id="senha" autocomplete="off" required minlength="8">
+                    </div>
 
-                <div class="campo">
-                    <label for="nome">Nome completo</label>
-                    <input
-                        type="text"
-                        id="nome"
-                        placeholder="Digite seu nome"
-                        required
-                    >
-                </div>
+                    <div class="campo">
+                        <label for="confirmarSenha">Confirmar senha</label>
+                        <input type="password" id="confirmarSenha" autocomplete="off" required>
+                    </div>
 
-                <div class="campo">
-                    <label for="email">E-mail</label>
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Digite seu e-mail"
-                        required
-                    >
-                </div>
+                    <div class="campo">
+                        <label for="endereco">Endereço</label>
+                        <input type="text" id="endereco" autocomplete="street-address" placeholder="Rua, número e cidade" required>
+                    </div>
 
-                <div class="campo">
-                    <label for="senha">Senha</label>
-                    <input
-                        type="password"
-                        id="senha"
-                        placeholder="Crie uma senha"
-                        required
-                        minlength="8"
-                    >
-                </div>
+                    <div class="campo">
+                        <label for="telefone">Telefone</label>
+                        <input type="tel" id="telefone" autocomplete="tel" placeholder="(00) 00000-0000" required>
+                    </div>
 
-                <div class="campo">
-                    <label for="confirmarSenha">Confirmar senha</label>
-                    <input
-                        type="password"
-                        id="confirmarSenha"
-                        placeholder="Confirme sua senha"
-                        required
-                    >
-                </div>
+                    <button type="submit">Criar minha conta <span>→</span></button>
+                    <p id="mensagem" role="status" aria-live="polite"></p>
+                </form>
 
-                <div class="campo">
-                    <label for="endereco">Endereço</label>
-                    <input
-                        type="text"
-                        id="endereco"
-                        placeholder="Digite seu endereço"
-                        required
-                    >
-                </div>
-
-                <div class="campo">
-                    <label for="telefone">Telefone</label>
-                    <input
-                        type="tel"
-                        id="telefone"
-                        placeholder="(00) 00000-0000"
-                        required
-                    >
-                </div>
-
-                <button type="submit">Criar conta</button>
-
-                <p id="mensagem"></p>
-
-            </form>
-
-            <p class="link-login">
-                Já possui uma conta?
-                <a href="login.html">Faça login</a>
-            </p>
-
-        </div>
-
+                <p class="link-login">
+                    Já possui uma conta?
+                    <a href="login.html">Entrar</a>
+                </p>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <p>RecycleWear © 2026 - Moda sustentável.</p>
+    <footer class="rodape-auth">
+        <p>© RecycleWear 2026</p>
+        <p>Moda sustentável, feita para durar.</p>
     </footer>
 
     <script src="cadastro.js"></script>

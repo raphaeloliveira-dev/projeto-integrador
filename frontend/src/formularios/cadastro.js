@@ -1,6 +1,8 @@
 const formulario = document.getElementById('formCadastro');
 
 if (formulario) {
+    formulario.reset();
+
     formulario.addEventListener('submit', async (event) => {
         event.preventDefault();
 

@@ -12,21 +12,28 @@
 
 <body>
     <header class="cabecalho-pagina">
-        <a class="marca" href="../pages/index.html">RecycleWear</a>
-        <a class="link-voltar" href="../pages/index.html#produtos">Continuar comprando</a>
+        <a class="marca" href="../pages/index.html">RECYCLE<span>WEAR</span></a>
+        <a class="link-voltar" href="../pages/index.html#produtos">← Continuar comprando</a>
     </header>
 
-
     <main class="conteudo-carrinho">
-        <section class="painel-carrinho" aria-labelledby="tituloCarrinho">
-            <h1 id="tituloCarrinho">Meu carrinho</h1>
-            <div id="itensCarrinho" class="itens-carrinho" aria-live="polite"></div>
-            <div class="resumo-carrinho">
-                <p>Total <strong id="totalCarrinho">R$ 0,00</strong></p>
-                <button id="limparCarrinho" class="botao-limpar" type="button">Limpar carrinho</button>
-            </div>
-        </section>
+        <div class="titulo-carrinho">
+            <p class="etiqueta-carrinho">RECYCLEWEAR / SACOLA</p>
+            <h1 id="tituloCarrinho">Sua sacola <span id="quantidadeItens">0 itens</span></h1>
+        </div>
+        <section id="itensCarrinho" class="itens-carrinho" aria-label="Produtos na sacola" aria-live="polite"></section>
     </main>
+
+    <footer class="barra-resumo">
+        <div class="nota-resumo">
+            <p>Peças conscientes, escolhidas por você.</p>
+            <button id="limparCarrinho" class="botao-limpar" type="button">Limpar sacola</button>
+        </div>
+        <div class="total-resumo">
+            <p><span>Total</span><strong id="totalCarrinho">R$ 0,00</strong></p>
+            <button id="finalizarCompra" class="botao-finalizar" type="button">Continuar para compra <span>→</span></button>
+        </div>
+    </footer>
 
 
     <script src="carrinho.js"></script>

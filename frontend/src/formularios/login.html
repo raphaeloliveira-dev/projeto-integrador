@@ -8,44 +8,53 @@
     <link rel="stylesheet" href="cadastro.css">
 </head>
 
-<body class="pagina-login">
-    <header>
-        <h1>RecycleWear</h1>
-
-        <nav>
-            <a href="../pages/index.html">Início</a>
-        </nav>
+<body class="pagina-auth pagina-login">
+    <header class="cabecalho-auth">
+        <a class="marca-auth" href="../pages/index.html">RECYCLE<span>WEAR</span></a>
+        <a class="link-inicio" href="../pages/index.html">Voltar à loja <span>↗</span></a>
     </header>
 
-    <main class="container-cadastro">
-        <div class="formulario">
-            <h2>Bem-vindo de volta</h2>
-            <p class="subtitulo">Acesse sua conta e continue sua jornada sustentável.</p>
+    <main class="auth-layout">
+        <section class="auth-editorial" aria-label="RecycleWear, moda consciente">
+            <img src="../images/camiseta-basica-preta.png" alt="Camiseta básica preta da coleção RecycleWear">
+            <div class="auth-editorial-copy">
+                <p>ROUPA COM OUTRA HISTÓRIA</p>
+                <h1>Vista um<br>novo ciclo.</h1>
+            </div>
+        </section>
 
-            <form id="formLogin">
-                <div class="campo">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" placeholder="Digite seu e-mail" required>
-                </div>
+        <section class="auth-form-area">
+            <div class="formulario">
+                <p class="etiqueta-form">SUA CONTA RECYCLEWEAR</p>
+                <h2>Que bom ter você de volta.</h2>
+                <p class="subtitulo">Entre para continuar sua experiência.</p>
 
-                <div class="campo">
-                    <label for="senha">Senha</label>
-                    <input type="password" id="senha" placeholder="Digite sua senha" required>
-                </div>
+                <form id="formLogin" autocomplete="off">
+                    <div class="campo">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" autocomplete="off" required>
+                    </div>
 
-                <button type="submit">Entrar</button>
-                <p id="mensagem"></p>
-            </form>
+                    <div class="campo">
+                        <label for="senha">Senha</label>
+                        <input type="password" id="senha" autocomplete="off" required>
+                    </div>
 
-            <p class="link-login">
-                Ainda não tem uma conta?
-                <a href="cadastro.html">Crie agora</a>
-            </p>
-        </div>
+                    <button type="submit">Entrar na conta <span>→</span></button>
+                    <p id="mensagem" role="status" aria-live="polite"></p>
+                </form>
+
+                <p class="link-login">
+                    Ainda não tem uma conta?
+                    <a href="cadastro.html">Criar cadastro</a>
+                </p>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <p>RecycleWear © 2026 - Moda sustentável!</p>
+    <footer class="rodape-auth">
+        <p>© RecycleWear 2026</p>
+        <p>Moda sustentável, feita para durar.</p>
     </footer>
 
     <script src="login.js"></script>
