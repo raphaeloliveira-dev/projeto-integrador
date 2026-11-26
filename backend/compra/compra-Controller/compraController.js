@@ -1,7 +1,7 @@
 const compraModels = require('../compra-Models/compraModels');
 
 const finalizarCompra = async (req, res) => {
-    const { cliente_id, itens } = req.body;
+    const { cliente_id, itens, cep } = req.body;
 
     if (!Number.isSafeInteger(Number(cliente_id)) || Number(cliente_id) < 1) {
         return res.status(400).json({ mensagem: 'Faça login para finalizar a compra.' });
@@ -9,6 +9,10 @@ const finalizarCompra = async (req, res) => {
 
     if (!Array.isArray(itens) || itens.length === 0) {
         return res.status(400).json({ mensagem: 'O carrinho está vazio.' });
+    }
+
+    if (typeof cep !== 'string' || !/^\d{5}-?\d{3}$/.test(cep) || /^0+$/.test(cep.replace(/\D/g, ''))) {
+        return res.status(400).json({ mensagem: 'Informe um CEP válido para calcular o frete.' });
     }
 
     const itensValidos = itens.every((item) =>

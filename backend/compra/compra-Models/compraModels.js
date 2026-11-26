@@ -6,10 +6,11 @@ const finalizarCompra = async (clienteId, itens) => {
     try {
         await conexao.beginTransaction();
         let total = 0;
+        const itensComprados = [];
 
         for (const item of itens) {
             const produtos = await conexao.query(
-                'SELECT id, preco, quantidade FROM produto WHERE id = ?',
+                'SELECT id, nome, preco, quantidade FROM produto WHERE id = ?',
                 [item.id]
             );
             const produto = produtos[0];
@@ -21,14 +22,25 @@ const finalizarCompra = async (clienteId, itens) => {
                 throw new Error(`Estoque insuficiente para ${produto.id}.`);
             }
 
-            total += Number(produto.preco) * item.quantidade;
+            const preco = Number(produto.preco);
+            const subtotal = Number((preco * item.quantidade).toFixed(2));
+            total += subtotal;
+            itensComprados.push({
+                id: Number(produto.id),
+                nome: produto.nome,
+                preco,
+                quantidade: item.quantidade,
+                subtotal
+            });
             await conexao.query(
                 'UPDATE produto SET quantidade = quantidade - ? WHERE id = ?',
                 [item.quantidade, item.id]
             );
         }
 
-        total = Number(total.toFixed(2));
+        const subtotal = Number(total.toFixed(2));
+        const frete = 15.90;
+        total = Number((total + frete).toFixed(2));
         const carrinho = await conexao.query(
             'INSERT INTO carrinho_de_compra (cliente_id) VALUES (?)',
             [clienteId]
@@ -51,6 +63,9 @@ const finalizarCompra = async (clienteId, itens) => {
             carrinhoId: Number(carrinho.insertId),
             compraId: Number(compra.insertId),
             notaFiscalId: Number(nota.insertId),
+            itens: itensComprados,
+            subtotal,
+            frete,
             total
         };
     } catch (erro) {

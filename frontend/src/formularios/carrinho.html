@@ -22,7 +22,65 @@
             <h1 id="tituloCarrinho">Sua sacola <span id="quantidadeItens">0 itens</span></h1>
         </div>
         <section id="itensCarrinho" class="itens-carrinho" aria-label="Produtos na sacola" aria-live="polite"></section>
+
+        <section class="calculadora-frete" aria-labelledby="tituloFrete">
+            <div>
+                <h2 id="tituloFrete">Calcule o frete</h2>
+                <p>Taxa fixa demonstrativa de R$ 15,90 por pedido.</p>
+            </div>
+            <form id="formularioFrete" class="formulario-frete" novalidate>
+                <label class="visually-hidden" for="cepFrete">CEP de entrega</label>
+                <input
+                    id="cepFrete"
+                    name="cep"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="postal-code"
+                    placeholder="00000-000"
+                    maxlength="9"
+                    aria-describedby="mensagemFrete"
+                    required
+                >
+                <button type="submit">Calcular</button>
+            </form>
+            <p id="mensagemFrete" class="mensagem-frete" role="status" aria-live="polite"></p>
+        </section>
     </main>
+
+    <section id="notaFiscal" class="nota-fiscal" aria-labelledby="tituloNotaFiscal" aria-live="polite" hidden>
+        <div class="cabecalho-nota">
+            <div>
+                <p class="etiqueta-carrinho">RECYCLEWEAR / DOCUMENTO DEMONSTRATIVO</p>
+                <h2 id="tituloNotaFiscal">Nota fiscal do pedido</h2>
+            </div>
+            <p>Nº <strong id="numeroNotaFiscal"></strong></p>
+        </div>
+        <div class="dados-nota">
+            <p>Cliente <strong id="clienteNotaFiscal"></strong></p>
+            <p>Data <strong id="dataNotaFiscal"></strong></p>
+            <p>Entrega - CEP <strong id="cepNotaFiscal"></strong></p>
+        </div>
+        <div class="tabela-nota-conteiner">
+            <table class="tabela-nota">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Qtd.</th>
+                        <th>Valor unitário</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody id="itensNotaFiscal"></tbody>
+            </table>
+        </div>
+        <div class="totais-nota">
+            <p>Subtotal <strong id="subtotalNotaFiscal"></strong></p>
+            <p>Frete <strong id="freteNotaFiscal"></strong></p>
+            <p class="total-nota">Total <strong id="totalNotaFiscal"></strong></p>
+        </div>
+        <p class="aviso-nota">Comprovante demonstrativo da compra; não substitui uma NF-e oficial.</p>
+        <button id="imprimirNotaFiscal" class="botao-imprimir" type="button">Imprimir nota</button>
+    </section>
 
     <footer class="barra-resumo">
         <div class="nota-resumo">
@@ -30,7 +88,11 @@
             <button id="limparCarrinho" class="botao-limpar" type="button">Limpar sacola</button>
         </div>
         <div class="total-resumo">
-            <p><span>Total</span><strong id="totalCarrinho">R$ 0,00</strong></p>
+            <div class="valores-resumo">
+                <p><span>Subtotal</span><strong id="subtotalCarrinho">R$ 0,00</strong></p>
+                <p><span>Frete</span><strong id="freteCarrinho">Calcule seu frete</strong></p>
+                <p class="valor-total"><span>Total</span><strong id="totalCarrinho">R$ 0,00</strong></p>
+            </div>
             <button id="finalizarCompra" class="botao-finalizar" type="button">Continuar para compra <span>→</span></button>
         </div>
     </footer>

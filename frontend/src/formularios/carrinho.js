@@ -1,7 +1,15 @@
 const chaveCarrinho = 'recycleWearCarrinho';
+const valorFreteFixo = 15.90;
 const carrinho = carregarCarrinho();
 const itensCarrinho = document.getElementById('itensCarrinho');
 const totalCarrinho = document.getElementById('totalCarrinho');
+const subtotalCarrinho = document.getElementById('subtotalCarrinho');
+const freteCarrinho = document.getElementById('freteCarrinho');
+const formularioFrete = document.getElementById('formularioFrete');
+const campoCepFrete = document.getElementById('cepFrete');
+const mensagemFrete = document.getElementById('mensagemFrete');
+let freteCalculado = false;
+let cepCalculado = '';
 
 
 function carregarCarrinho() {
@@ -159,7 +167,8 @@ function atualizarCarrinho() {
     }
 
     const quantidadeTotal = carrinho.reduce((soma, item) => soma + item.quantidade, 0);
-    const valorTotal = carrinho.reduce((soma, item) => soma + item.preco * item.quantidade, 0);
+    const valorSubtotal = carrinho.reduce((soma, item) => soma + item.preco * item.quantidade, 0);
+    const valorTotal = valorSubtotal + (freteCalculado && carrinho.length > 0 ? valorFreteFixo : 0);
     const quantidadeCarrinho = document.getElementById('quantidadeCarrinho');
     if (quantidadeCarrinho) {
         quantidadeCarrinho.textContent = quantidadeTotal;
@@ -168,13 +177,19 @@ function atualizarCarrinho() {
             `${quantidadeTotal} ${quantidadeTotal === 1 ? 'item' : 'itens'} no carrinho`
         );
     }
+    if (subtotalCarrinho) subtotalCarrinho.textContent = formatarMoeda(valorSubtotal);
+    if (freteCarrinho) {
+        freteCarrinho.textContent = freteCalculado && carrinho.length > 0
+            ? formatarMoeda(valorFreteFixo)
+            : 'Calcule seu frete';
+    }
     if (totalCarrinho) totalCarrinho.textContent = formatarMoeda(valorTotal);
     const quantidadeItens = document.getElementById('quantidadeItens');
     if (quantidadeItens) {
         quantidadeItens.textContent = `${quantidadeTotal} ${quantidadeTotal === 1 ? 'item' : 'itens'}`;
     }
     const botaoFinalizar = document.getElementById('finalizarCompra');
-    if (botaoFinalizar) botaoFinalizar.disabled = carrinho.length === 0;
+    if (botaoFinalizar) botaoFinalizar.disabled = carrinho.length === 0 || !freteCalculado;
     const botaoLimpar = document.getElementById('limparCarrinho');
     if (botaoLimpar) botaoLimpar.disabled = carrinho.length === 0;
 }
@@ -183,11 +198,51 @@ function formatarMoeda(valor) {
     return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+if (campoCepFrete) {
+    campoCepFrete.addEventListener('input', () => {
+        const digitos = campoCepFrete.value.replace(/\D/g, '').slice(0, 8);
+        campoCepFrete.value = digitos.length > 5
+            ? `${digitos.slice(0, 5)}-${digitos.slice(5)}`
+            : digitos;
+        freteCalculado = false;
+        cepCalculado = '';
+        if (mensagemFrete) mensagemFrete.textContent = '';
+        atualizarCarrinho();
+    });
+}
+
+if (formularioFrete) {
+    formularioFrete.addEventListener('submit', (evento) => {
+        evento.preventDefault();
+        const cep = campoCepFrete.value.replace(/\D/g, '');
+
+        if (carrinho.length === 0) {
+            mensagemFrete.textContent = 'Adicione produtos antes de calcular o frete.';
+            return;
+        }
+        if (!/^\d{8}$/.test(cep) || /^0{8}$/.test(cep)) {
+            freteCalculado = false;
+            cepCalculado = '';
+            mensagemFrete.textContent = 'Informe um CEP válido com 8 números.';
+            atualizarCarrinho();
+            return;
+        }
+
+        freteCalculado = true;
+        cepCalculado = cep;
+        mensagemFrete.textContent = `Frete demonstrativo de ${formatarMoeda(valorFreteFixo)} para o CEP ${campoCepFrete.value}.`;
+        atualizarCarrinho();
+    });
+}
+
 
 const botaoLimparCarrinho = document.getElementById('limparCarrinho');
 if (botaoLimparCarrinho) {
     botaoLimparCarrinho.addEventListener('click', () => {
         carrinho.splice(0, carrinho.length);
+        freteCalculado = false;
+        cepCalculado = '';
+        if (mensagemFrete) mensagemFrete.textContent = '';
         salvarCarrinho();
     });
 }
@@ -295,10 +350,23 @@ function renderizarCarrossel() {
 
 function mostrarProduto(indice) {
     if (produtosCarrossel.length === 0) return;
-    indiceProdutoAtual = (indice + produtosCarrossel.length) % produtosCarrossel.length;
+    const novoIndice = (indice + produtosCarrossel.length) % produtosCarrossel.length;
+    const produtoMudou = novoIndice !== indiceProdutoAtual;
+    indiceProdutoAtual = novoIndice;
 
     const trilho = document.getElementById('listaProdutos');
     if (trilho) trilho.style.transform = `translateX(-${indiceProdutoAtual * 100}%)`;
+
+    const slides = document.querySelectorAll('.slide-produto');
+    slides.forEach((slide, posicao) => {
+        if (posicao !== indiceProdutoAtual || produtoMudou) {
+            slide.classList.remove('slide-produto--entrando');
+        }
+    });
+    const slideAtual = slides[indiceProdutoAtual];
+    if (slideAtual && !slideAtual.classList.contains('slide-produto--entrando')) {
+        slideAtual.classList.add('slide-produto--entrando');
+    }
 
     document.querySelectorAll('.indicador').forEach((indicador, posicao) => {
         indicador.setAttribute('aria-current', String(posicao === indiceProdutoAtual));
@@ -325,12 +393,17 @@ async function finalizarCompra() {
         alert('Seu carrinho está vazio.');
         return;
     }
+    if (!freteCalculado || !cepCalculado) {
+        alert('Calcule o frete antes de finalizar a compra.');
+        return;
+    }
 
     const resposta = await fetch('http://localhost:3000/api/compras/finalizar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             cliente_id: usuario.id,
+            cep: cepCalculado,
             itens: carrinho.map((item) => ({
                 id: item.id,
                 quantidade: item.quantidade
@@ -344,17 +417,57 @@ async function finalizarCompra() {
         return;
     }
 
+    exibirNotaFiscal(resultado, usuario, cepCalculado);
     carrinho.splice(0, carrinho.length);
+    freteCalculado = false;
+    cepCalculado = '';
     salvarCarrinho();
-    alert(`${resultado.mensagem} Total: ${Number(resultado.total).toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    })}`);
+    alert(`${resultado.mensagem} Frete: ${formatarMoeda(Number(resultado.frete))} Total: ${formatarMoeda(Number(resultado.total))}`);
+}
+
+function exibirNotaFiscal(compra, usuario, cep) {
+    const notaFiscal = document.getElementById('notaFiscal');
+    const itensNotaFiscal = document.getElementById('itensNotaFiscal');
+    if (!notaFiscal || !itensNotaFiscal || !Array.isArray(compra.itens)) {
+        throw new Error('A compra foi registrada, mas os dados da nota fiscal não foram retornados.');
+    }
+
+    document.getElementById('numeroNotaFiscal').textContent = compra.notaFiscalId;
+    document.getElementById('clienteNotaFiscal').textContent = usuario.nome || usuario.email;
+    document.getElementById('dataNotaFiscal').textContent = new Date().toLocaleString('pt-BR');
+    document.getElementById('cepNotaFiscal').textContent = `${cep.slice(0, 5)}-${cep.slice(5)}`;
+    document.getElementById('subtotalNotaFiscal').textContent = formatarMoeda(Number(compra.subtotal));
+    document.getElementById('freteNotaFiscal').textContent = formatarMoeda(Number(compra.frete));
+    document.getElementById('totalNotaFiscal').textContent = formatarMoeda(Number(compra.total));
+
+    itensNotaFiscal.replaceChildren();
+    compra.itens.forEach((item) => {
+        const linha = document.createElement('tr');
+        const nome = document.createElement('td');
+        const quantidade = document.createElement('td');
+        const preco = document.createElement('td');
+        const subtotal = document.createElement('td');
+
+        nome.textContent = item.nome;
+        quantidade.textContent = item.quantidade;
+        preco.textContent = formatarMoeda(Number(item.preco));
+        subtotal.textContent = formatarMoeda(Number(item.subtotal));
+        linha.append(nome, quantidade, preco, subtotal);
+        itensNotaFiscal.append(linha);
+    });
+
+    notaFiscal.hidden = false;
+    notaFiscal.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 const botaoFinalizarCompra = document.getElementById('finalizarCompra');
 if (botaoFinalizarCompra) {
     botaoFinalizarCompra.addEventListener('click', finalizarCompra);
+}
+
+const botaoImprimirNota = document.getElementById('imprimirNotaFiscal');
+if (botaoImprimirNota) {
+    botaoImprimirNota.addEventListener('click', () => window.print());
 }
 
 atualizarCarrinho();

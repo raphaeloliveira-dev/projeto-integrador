@@ -114,6 +114,38 @@ main {
     background: #e9e7df;
 }
 
+.slide-produto--entrando .slide-conteudo {
+    animation: produto-conteudo-entra 520ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+}
+
+.slide-produto--entrando .slide-imagem img {
+    animation: produto-imagem-entra 650ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+}
+
+@keyframes produto-conteudo-entra {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes produto-imagem-entra {
+    from {
+        opacity: 0.65;
+        transform: scale(1.035);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .slide-conteudo {
     z-index: 1;
     display: flex;
@@ -431,5 +463,6 @@ footer > span {
     *::after {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
     }
 }

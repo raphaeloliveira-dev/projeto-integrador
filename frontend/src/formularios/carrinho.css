@@ -13,7 +13,7 @@
 
 body {
     min-height: 100vh;
-    padding-bottom: 116px;
+    padding-bottom: 150px;
     background: var(--fundo);
     color: var(--texto);
     font-family: Arial, sans-serif;
@@ -42,6 +42,16 @@ body {
 
 .marca span {
     font-weight: 400;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
 }
 
 .link-voltar {
@@ -200,6 +210,186 @@ body {
     text-align: center;
 }
 
+.calculadora-frete {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px 24px;
+    max-width: 520px;
+    margin-top: 40px;
+    padding: 22px;
+    border: 1px solid var(--linha);
+}
+
+.calculadora-frete h2 {
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.calculadora-frete > div p,
+.mensagem-frete {
+    color: var(--texto-suave);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.formulario-frete {
+    display: flex;
+    gap: 8px;
+}
+
+.formulario-frete input {
+    width: 130px;
+    min-height: 42px;
+    padding: 0 10px;
+    border: 1px solid var(--linha);
+    border-radius: 0;
+    font: inherit;
+    font-size: 12px;
+}
+
+.formulario-frete button {
+    min-height: 42px;
+    padding: 0 14px;
+    border: 1px solid var(--texto);
+    background: var(--texto);
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.formulario-frete button:hover {
+    background: #fff;
+    color: var(--texto);
+}
+
+.mensagem-frete {
+    grid-column: 1 / -1;
+    min-height: 16px;
+}
+
+.nota-fiscal[hidden] {
+    display: none;
+}
+
+.nota-fiscal {
+    width: min(900px, 90%);
+    margin: 0 auto 150px;
+    padding: clamp(22px, 5vw, 48px);
+    border: 1px solid var(--linha);
+}
+
+.cabecalho-nota {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--linha);
+}
+
+.cabecalho-nota h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(25px, 4vw, 38px);
+    font-weight: 400;
+}
+
+.cabecalho-nota > p,
+.dados-nota,
+.tabela-nota,
+.totais-nota,
+.aviso-nota {
+    font-size: 11px;
+}
+
+.dados-nota {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 30px;
+    padding: 20px 0;
+}
+
+.dados-nota p,
+.totais-nota p {
+    display: flex;
+    gap: 6px;
+}
+
+.dados-nota strong,
+.totais-nota strong {
+    font-weight: 600;
+}
+
+.tabela-nota-conteiner {
+    overflow-x: auto;
+}
+
+.tabela-nota {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.tabela-nota th,
+.tabela-nota td {
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--linha);
+}
+
+.tabela-nota th:not(:first-child),
+.tabela-nota td:not(:first-child) {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.totais-nota {
+    display: grid;
+    justify-content: end;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.totais-nota p {
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.totais-nota .total-nota {
+    padding-top: 8px;
+    border-top: 1px solid var(--linha);
+    font-size: 13px;
+}
+
+.aviso-nota {
+    margin-top: 22px;
+    color: var(--texto-suave);
+    line-height: 1.5;
+}
+
+.botao-imprimir {
+    min-height: 42px;
+    margin-top: 20px;
+    padding: 0 16px;
+    border: 1px solid var(--texto);
+    background: #fff;
+    color: var(--texto);
+    cursor: pointer;
+    font: inherit;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.botao-imprimir:hover {
+    background: var(--texto);
+    color: #fff;
+}
+
 .barra-resumo {
     position: fixed;
     z-index: 3;
@@ -241,15 +431,32 @@ body {
     gap: 20px;
 }
 
-.total-resumo p {
+.valores-resumo {
     display: grid;
-    gap: 5px;
+    min-width: 130px;
+    gap: 4px;
+}
+
+.valores-resumo p {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
     font-size: 10px;
 }
 
-.total-resumo strong {
-    font-size: 13px;
+.valores-resumo strong {
     font-weight: 400;
+    white-space: nowrap;
+}
+
+.valores-resumo .valor-total {
+    padding-top: 4px;
+    border-top: 1px solid var(--linha);
+    font-size: 11px;
+}
+
+.valores-resumo .valor-total strong {
+    font-size: 13px;
 }
 
 .botao-finalizar {
@@ -283,7 +490,7 @@ body {
 
 @media (max-width: 650px) {
     body {
-        padding-bottom: 150px;
+        padding-bottom: 205px;
     }
 
     .cabecalho-pagina {
@@ -346,6 +553,22 @@ body {
         justify-content: space-between;
     }
 
+    .calculadora-frete {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 28px;
+        padding: 18px;
+    }
+
+    .formulario-frete input {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mensagem-frete {
+        grid-column: auto;
+    }
+
     .botao-finalizar {
         flex: 1;
         justify-content: center;
@@ -359,5 +582,27 @@ body {
     *::before,
     *::after {
         transition-duration: 0.01ms !important;
+    }
+}
+
+@media print {
+    body {
+        padding: 0;
+    }
+
+    .cabecalho-pagina,
+    .conteudo-carrinho,
+    .barra-resumo,
+    .botao-imprimir {
+        display: none !important;
+    }
+
+    .nota-fiscal,
+    .nota-fiscal[hidden] {
+        display: block !important;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
     }
 }
