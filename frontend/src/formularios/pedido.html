@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido confirmado | RecycleWear</title>
+    <link rel="stylesheet" href="carrinho.css">
+</head>
+
+<body class="pagina-pedido">
+    <header class="cabecalho-pagina">
+        <a class="marca" href="../pages/index.html">RECYCLE<span>WEAR</span></a>
+        <a class="link-voltar" href="../pages/index.html#produtos">Continuar comprando</a>
+    </header>
+
+    <main class="conteudo-pedido">
+        <div class="titulo-carrinho titulo-pedido">
+            <p class="etiqueta-carrinho">RECYCLEWEAR / PEDIDO</p>
+            <h1>Compra confirmada</h1>
+        </div>
+
+        <p id="pedidoIndisponivel" class="pedido-indisponivel" role="status" hidden>
+            Não encontramos os dados deste pedido nesta sessão. Volte à loja para continuar comprando.
+        </p>
+
+        <section id="notaFiscal" class="nota-fiscal" aria-labelledby="tituloNotaFiscal" hidden>
+            <div class="cabecalho-nota">
+                <div>
+                    <p class="etiqueta-carrinho">RECYCLEWEAR / DOCUMENTO DEMONSTRATIVO</p>
+                    <h2 id="tituloNotaFiscal">Resumo do pedido</h2>
+                </div>
+                <p>Nº <strong id="numeroNotaFiscal"></strong></p>
+            </div>
+            <div class="dados-nota">
+                <p>Cliente <strong id="clienteNotaFiscal"></strong></p>
+                <p>Data e hora do pedido <strong id="dataNotaFiscal"></strong></p>
+                <p>CEP <strong id="cepNotaFiscal"></strong></p>
+                <p class="endereco-nota">Endereço de entrega <strong id="enderecoNotaFiscal"></strong></p>
+                <p class="previsao-nota">
+                    Previsão de entrega <strong id="previsaoEntregaNota"></strong>
+                </p>
+            </div>
+            <div class="tabela-nota-conteiner">
+                <table class="tabela-nota">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Qtd.</th>
+                            <th>Valor unitário</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itensNotaFiscal"></tbody>
+                </table>
+            </div>
+            <div class="totais-nota">
+                <p>Subtotal <strong id="subtotalNotaFiscal"></strong></p>
+                <p>Frete <strong id="freteNotaFiscal"></strong></p>
+                <p class="total-nota">Valor da compra <strong id="totalNotaFiscal"></strong></p>
+            </div>
+            <p class="aviso-previsao">Previsão estimada em dias úteis; pode variar conforme o transporte.</p>
+            <p class="aviso-nota">Comprovante demonstrativo da compra; não substitui uma NF-e oficial.</p>
+            <button id="imprimirNotaFiscal" class="botao-imprimir" type="button">Imprimir pedido</button>
+        </section>
+    </main>
+
+    <script src="pedido.js"></script>
+</body>
+
+</html>

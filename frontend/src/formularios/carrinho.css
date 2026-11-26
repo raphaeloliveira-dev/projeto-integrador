@@ -269,12 +269,72 @@ body {
     color: var(--texto);
 }
 
+.endereco-entrega {
+    display: grid;
+    grid-column: 1 / -1;
+    gap: 7px;
+}
+
+.endereco-entrega label {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+}
+
+.endereco-entrega textarea {
+    width: 100%;
+    min-height: 76px;
+    padding: 10px;
+    border: 1px solid var(--linha);
+    border-radius: 0;
+    font: inherit;
+    font-size: 12px;
+    resize: vertical;
+}
+
+.endereco-entrega p {
+    color: var(--texto-suave);
+    font-size: 10px;
+}
+
 .mensagem-frete {
     grid-column: 1 / -1;
     min-height: 16px;
 }
 
 .nota-fiscal[hidden] {
+    display: none;
+}
+
+.pagina-pedido {
+    padding-bottom: 0;
+}
+
+.conteudo-pedido {
+    width: min(1120px, 100%);
+    margin: 0 auto;
+    padding: clamp(38px, 7vw, 88px) 5% 56px;
+}
+
+.titulo-pedido {
+    margin-bottom: 28px;
+}
+
+.titulo-pedido h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 400;
+    letter-spacing: -0.05em;
+}
+
+.pedido-indisponivel {
+    width: min(900px, 90%);
+    margin: 60px auto;
+    color: var(--texto-suave);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.pedido-indisponivel[hidden] {
     display: none;
 }
 
@@ -318,6 +378,21 @@ body {
 .totais-nota p {
     display: flex;
     gap: 6px;
+}
+
+.dados-nota .endereco-nota {
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.endereco-nota strong {
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.dados-nota .previsao-nota {
+    flex-basis: 100%;
 }
 
 .dados-nota strong,
@@ -369,6 +444,12 @@ body {
     margin-top: 22px;
     color: var(--texto-suave);
     line-height: 1.5;
+}
+
+.aviso-previsao {
+    margin-top: 12px;
+    color: var(--texto-suave);
+    font-size: 10px;
 }
 
 .botao-imprimir {
@@ -512,6 +593,10 @@ body {
         padding-top: 45px;
     }
 
+    .conteudo-pedido {
+        padding-top: 45px;
+    }
+
     .titulo-carrinho {
         margin-bottom: 24px;
     }
@@ -593,6 +678,7 @@ body {
     .cabecalho-pagina,
     .conteudo-carrinho,
     .barra-resumo,
+    .titulo-pedido,
     .botao-imprimir {
         display: none !important;
     }

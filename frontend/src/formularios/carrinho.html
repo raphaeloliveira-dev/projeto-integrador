@@ -43,44 +43,23 @@
                 >
                 <button type="submit">Calcular</button>
             </form>
+            <div class="endereco-entrega">
+                <label for="enderecoEntrega">Endereço de entrega</label>
+                <textarea
+                    id="enderecoEntrega"
+                    name="endereco"
+                    rows="3"
+                    maxlength="300"
+                    placeholder="Rua, número, bairro, cidade - UF"
+                    autocomplete="street-address"
+                    aria-describedby="ajudaEndereco"
+                    required
+                ></textarea>
+                <p id="ajudaEndereco">Informe rua, número, bairro, cidade e estado.</p>
+            </div>
             <p id="mensagemFrete" class="mensagem-frete" role="status" aria-live="polite"></p>
         </section>
     </main>
-
-    <section id="notaFiscal" class="nota-fiscal" aria-labelledby="tituloNotaFiscal" aria-live="polite" hidden>
-        <div class="cabecalho-nota">
-            <div>
-                <p class="etiqueta-carrinho">RECYCLEWEAR / DOCUMENTO DEMONSTRATIVO</p>
-                <h2 id="tituloNotaFiscal">Nota fiscal do pedido</h2>
-            </div>
-            <p>Nº <strong id="numeroNotaFiscal"></strong></p>
-        </div>
-        <div class="dados-nota">
-            <p>Cliente <strong id="clienteNotaFiscal"></strong></p>
-            <p>Data <strong id="dataNotaFiscal"></strong></p>
-            <p>Entrega - CEP <strong id="cepNotaFiscal"></strong></p>
-        </div>
-        <div class="tabela-nota-conteiner">
-            <table class="tabela-nota">
-                <thead>
-                    <tr>
-                        <th>Produto</th>
-                        <th>Qtd.</th>
-                        <th>Valor unitário</th>
-                        <th>Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody id="itensNotaFiscal"></tbody>
-            </table>
-        </div>
-        <div class="totais-nota">
-            <p>Subtotal <strong id="subtotalNotaFiscal"></strong></p>
-            <p>Frete <strong id="freteNotaFiscal"></strong></p>
-            <p class="total-nota">Total <strong id="totalNotaFiscal"></strong></p>
-        </div>
-        <p class="aviso-nota">Comprovante demonstrativo da compra; não substitui uma NF-e oficial.</p>
-        <button id="imprimirNotaFiscal" class="botao-imprimir" type="button">Imprimir nota</button>
-    </section>
 
     <footer class="barra-resumo">
         <div class="nota-resumo">

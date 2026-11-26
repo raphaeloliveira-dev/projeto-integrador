@@ -397,6 +397,12 @@ async function finalizarCompra() {
         alert('Calcule o frete antes de finalizar a compra.');
         return;
     }
+    const enderecoEntrega = document.getElementById('enderecoEntrega').value.trim();
+    if (!enderecoEntrega) {
+        alert('Informe o endereço completo para a entrega.');
+        document.getElementById('enderecoEntrega').focus();
+        return;
+    }
 
     const resposta = await fetch('http://localhost:3000/api/compras/finalizar', {
         method: 'POST',
@@ -417,57 +423,26 @@ async function finalizarCompra() {
         return;
     }
 
-    exibirNotaFiscal(resultado, usuario, cepCalculado);
+    sessionStorage.setItem('recycleWearUltimoPedido', JSON.stringify({
+        ...resultado,
+        cliente: {
+            nome: usuario.nome || '',
+            email: usuario.email || ''
+        },
+        cep: cepCalculado,
+        enderecoEntrega,
+        dataCompra: new Date().toISOString()
+    }));
     carrinho.splice(0, carrinho.length);
     freteCalculado = false;
     cepCalculado = '';
     salvarCarrinho();
-    alert(`${resultado.mensagem} Frete: ${formatarMoeda(Number(resultado.frete))} Total: ${formatarMoeda(Number(resultado.total))}`);
-}
-
-function exibirNotaFiscal(compra, usuario, cep) {
-    const notaFiscal = document.getElementById('notaFiscal');
-    const itensNotaFiscal = document.getElementById('itensNotaFiscal');
-    if (!notaFiscal || !itensNotaFiscal || !Array.isArray(compra.itens)) {
-        throw new Error('A compra foi registrada, mas os dados da nota fiscal não foram retornados.');
-    }
-
-    document.getElementById('numeroNotaFiscal').textContent = compra.notaFiscalId;
-    document.getElementById('clienteNotaFiscal').textContent = usuario.nome || usuario.email;
-    document.getElementById('dataNotaFiscal').textContent = new Date().toLocaleString('pt-BR');
-    document.getElementById('cepNotaFiscal').textContent = `${cep.slice(0, 5)}-${cep.slice(5)}`;
-    document.getElementById('subtotalNotaFiscal').textContent = formatarMoeda(Number(compra.subtotal));
-    document.getElementById('freteNotaFiscal').textContent = formatarMoeda(Number(compra.frete));
-    document.getElementById('totalNotaFiscal').textContent = formatarMoeda(Number(compra.total));
-
-    itensNotaFiscal.replaceChildren();
-    compra.itens.forEach((item) => {
-        const linha = document.createElement('tr');
-        const nome = document.createElement('td');
-        const quantidade = document.createElement('td');
-        const preco = document.createElement('td');
-        const subtotal = document.createElement('td');
-
-        nome.textContent = item.nome;
-        quantidade.textContent = item.quantidade;
-        preco.textContent = formatarMoeda(Number(item.preco));
-        subtotal.textContent = formatarMoeda(Number(item.subtotal));
-        linha.append(nome, quantidade, preco, subtotal);
-        itensNotaFiscal.append(linha);
-    });
-
-    notaFiscal.hidden = false;
-    notaFiscal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.location.href = 'pedido.html';
 }
 
 const botaoFinalizarCompra = document.getElementById('finalizarCompra');
 if (botaoFinalizarCompra) {
     botaoFinalizarCompra.addEventListener('click', finalizarCompra);
-}
-
-const botaoImprimirNota = document.getElementById('imprimirNotaFiscal');
-if (botaoImprimirNota) {
-    botaoImprimirNota.addEventListener('click', () => window.print());
 }
 
 atualizarCarrinho();
